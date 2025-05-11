@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mother's Day Surprise</title>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9e8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .envelope {
+            position: relative;
+            width: 80vw;
+            height: 53vw;
+            max-width: 300px;
+            max-height: 200px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            z-index: 2;
+        }
+        
+        .envelope-front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40vw solid transparent;
+            border-right: 40vw solid transparent;
+            border-top: 27vw solid #e74c3c;
+            max-width: 150px;
+            max-height: 100px;
+            transform-origin: top;
+            transition: all 0.5s ease;
+            z-index: 3;
+        }
+        
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #c0392b;
+            border-radius: 0 0 10px 10px;
+            z-index: 1;
+        }
+        
+        .envelope-content {
+            position: absolute;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            background-color: #fff;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 0 0 5px 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 0;
+            padding: 10px;
+        }
+        
+        .rose {
+            font-size: 15vw;
+            margin-bottom: 4vw;
+            color: #e74c3c;
+            transform: scale(0);
+            transition: transform 0.5s ease 0.3s;
+        }
+        
+        .message {
+            font-size: 6vw;
+            color: #333;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease 0.6s;
+            padding: 0 10px;
+            text-align: center;
+        }
+        
+        .instructions {
+            margin-top: 5vw;
+            color: #7f8c8d;
+            font-style: italic;
+            font-size: 4vw;
+        }
+        
+        .open .envelope-front {
+            transform: rotateX(180deg);
+        }
+        
+        .open .envelope-content {
+            opacity: 1;
+            z-index: 4;
+        }
+        
+        .open .rose {
+            transform: scale(1);
+        }
+        
+        .open .message {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        @media (min-width: 500px) {
+            .rose { font-size: 60px; }
+            .message { font-size: 24px; }
+            .instructions { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-front"></div>
+            <div class="envelope-back"></div>
+            <div class="envelope-content">
+                <div class="rose">🌹</div>
+                <div class="message">Happy Mother's Day mi</div>
+            </div>
+        </div>
+        <p class="instructions">Tap on the envelope to open it</p>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope');
+        
+        // Touch support for Android
+        function toggleEnvelope() {
+            envelope.classList.toggle('open');
+            document.querySelector('.instructions').textContent = 
+                envelope.classList.contains('open') 
+                    ? 'Tap again to close' 
+                    : 'Tap on the envelope to open it';
+        }
+        
+        // Mouse click for desktop
+        envelope.addEventListener('click', toggleEnvelope);
+        
+        // Touch support for mobile
+        envelope.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            toggleEnvelope();
+        }, { passive: false });
+        
+        // Prevent double-tap zoom
+        document.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
